@@ -1,3 +1,10 @@
+import os
+import subprocess
+import threading
+import sys
+import locale
+import traceback 
+
 def handle_stream(stream, prefix):
     stream.reconfigure(encoding=locale.getpreferredencoding(), errors='replace')
     for msg in stream:
@@ -41,13 +48,13 @@ except:
     run_script([sys.executable, '-s', '-m', 'pip', 'install', '-r', requirements_path])
 
     try:
-        from .demofusion import NODE_CLASS_MAPPINGS
+        from .stablezero123 import NODE_CLASS_MAPPINGS
     except:
         print(f"## [ERROR] StableZero123: Attempting to reinstall dependencies using an alternative method.")
         run_script([sys.executable, '-s', '-m', 'pip', 'install', '--user', '-r', requirements_path])
 
         try:
-            from .demofusion import NODE_CLASS_MAPPINGS
+            from .stablezero123 import NODE_CLASS_MAPPINGS
         except:
             print(f"## [ERROR] StableZero123: Failed to install the GitPython package in the correct Python environment. Please install it manually in the appropriate environment. (You can seek help at https://app.element.io/#/room/%23comfyui_space%3Amatrix.org)")
             traceback.print_exc()
