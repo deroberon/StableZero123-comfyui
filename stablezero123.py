@@ -100,7 +100,15 @@ class Stablezero123:
         
         pipeline.scheduler = EulerAncestralDiscreteScheduler.from_config(
         pipeline.scheduler.config, timestep_spacing='trailing')
-        pipeline.to('cuda:0')
+        
+        ## Deal with different device hardware
+        device = "cpu"
+        if torch.cuda.is_available():
+            device = "cude"
+        elif torch.backends.mps.is_available():
+            device = "mps"
+        
+        pipeline.to(device)
         
         image=images[0]
         i = 255. * image.cpu().numpy()
@@ -158,7 +166,15 @@ class Stablezero123WithDepth:
         
         pipeline.scheduler = EulerAncestralDiscreteScheduler.from_config(
         pipeline.scheduler.config, timestep_spacing='trailing')
-        pipeline.to('cuda:0')
+        
+        ## Deal with different device hardware
+        device = "cpu"
+        if torch.cuda.is_available():
+            device = "cude"
+        elif torch.backends.mps.is_available():
+            device = "mps"
+        
+        pipeline.to(device)
         
         image=images[0]
         i = 255. * image.cpu().numpy()
