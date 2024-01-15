@@ -3,6 +3,7 @@ import requests
 from PIL import Image
 from diffusers import DiffusionPipeline, EulerAncestralDiscreteScheduler, ControlNetModel
 import numpy as np
+from comfy import model_management
 
 #tiles = [im[x:x+M,y:y+N] for x in range(0,im.shape[0],M) for y in range(0,im.shape[1],N)]
 class ImageSplit:
@@ -100,7 +101,8 @@ class Stablezero123:
         
         pipeline.scheduler = EulerAncestralDiscreteScheduler.from_config(
         pipeline.scheduler.config, timestep_spacing='trailing')
-        pipeline.to('cuda:0')
+        device = model_management.get_torch_device()
+        pipeline.to(device)
         
         image=images[0]
         i = 255. * image.cpu().numpy()
@@ -158,7 +160,8 @@ class Stablezero123WithDepth:
         
         pipeline.scheduler = EulerAncestralDiscreteScheduler.from_config(
         pipeline.scheduler.config, timestep_spacing='trailing')
-        pipeline.to('cuda:0')
+        device = model_management.get_torch_device()
+        pipeline.to(device)
         
         image=images[0]
         i = 255. * image.cpu().numpy()
